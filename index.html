@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post and Get</title>
+</head>
+<body>
+    <label for="">Get without sending data</label>
+    <form   method="get" >
+        <input type="text" placeholder="name" name="name" >
+        <input type="password" placeholder="password" name="password" >
+        <input type="submit">
+    </form>
+
+    <label for="">Post without sending data</label>
+    <form action="#" method="post" >
+        <input type="text" placeholder="name" name="name" >
+        <input type="password" placeholder="password" name="password" >
+        <input type="submit">
+    </form>
+
+    <label for="">get with sending data</label>
+    <form  action="http://localhost:3000/getdata"  method="get" >
+        <input type="text" placeholder="name" name="name" >
+        <input type="password" placeholder="password" name="password" >
+        <input type="submit">
+    </form>
+
+    <label for="">post with sending data</label>
+    <form onsubmit="formHandle(event)" method="post" >
+        <input type="text" placeholder="name" name="name" id="name">
+        <input type="password" placeholder="password" name="password" id="pass">
+        <input type="submit">
+    </form>
+
+    <script>
+        const formHandle = async (e) => {
+            e.preventDefault();
+            console.log("enter");
+            const name=document.getElementById("name").value;
+            const pass=document.getElementById("pass").value;
+            console.log(name);
+            // Create a FormData object to get form data
+            
+            try {
+                const res = await fetch("http://localhost:3000/getdata", {
+                    method: "POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify({name:name,password:pass})
+                });
+
+                const data = await res.json();
+                console.log(data);
+            } catch (error) {
+                console.log("error", error);
+            }
+        };
+    </script>
+    
+</body>
+</html>
